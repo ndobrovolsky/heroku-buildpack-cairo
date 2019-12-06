@@ -45,7 +45,7 @@ function vendor() {
 
 echo "-----> Vendoring binaries"
 vendor "https://www.cairographics.org/releases/cairo-1.16.0.tar.xz"  "$BUILD_DIR/vendor/cairo" "cairo-1.16.0.tar.xz"
-vendor "https://www.cairographics.org/releases/pango-1.16.0.tar.xz"  "$BUILD_DIR/vendor/pango" "pango-1.16.0.tar.xz"
+vendor "https://download.gnome.org/sources/pango/1.16/pango-1.16.0.tar.xz"  "$BUILD_DIR/vendor/pango" "pango-1.16.0.tar.xz"
 
 
 echo "-----> Tweaking Cairo, FreeType, and Pixman include paths"
