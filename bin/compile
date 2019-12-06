@@ -19,12 +19,12 @@ function indent() {
 function vendor() {
   binary="$1"
   path="$2"
-
+  name="$3"
   echo "Fetching $binary" | indent
   mkdir -p $path
 
   wget $binary -P $path | indent
-  tar xvf $path/cairo-1.14.6.tar.xz | indent
+  tar xvf $path/$name | indent
 
   if [ -d "$path/bin" ]; then
     export PATH=$path/bin:$PATH
@@ -44,13 +44,15 @@ function vendor() {
 }
 
 echo "-----> Vendoring binaries"
-vendor "https://www.cairographics.org/releases/cairo-1.14.6.tar.xz"  "$BUILD_DIR/vendor/cairo"
+vendor "https://www.cairographics.org/releases/cairo-1.16.0.tar.xz"  "$BUILD_DIR/vendor/cairo" "cairo-1.16.0.tar.xz"
+vendor "https://www.cairographics.org/releases/pango-1.16.0.tar.xz"  "$BUILD_DIR/vendor/pango" "pango-1.16.0.tar.xz"
+
 
 echo "-----> Tweaking Cairo, FreeType, and Pixman include paths"
 
 # node-canvas isn't using pkg-config, so we need to set non-standard paths
-export CPPPATH="$BUILD_DIR/vendor/cairo/include/cairo:$CPPPATH"
-export CPATH="$BUILD_DIR/vendor/cairo/include/cairo:$CPATH"
+export CPPPATH="$BUILD_DIR/vendor/cairo/include/cairo:$BUILD_DIR/vendor/cairo/include/pango:$CPPPATH"
+export CPATH="$BUILD_DIR/vendor/cairo/include/cairo:$BUILD_DIR/vendor/cairo/include/pango:$CPATH"
 
 echo "-----> Configuring build environment"
 
